@@ -14,12 +14,12 @@
   <version>${revision}${changelist}</version>
   <packaging>hpi</packaging>
 
-  <name>TODO Plugin</name>
-  <url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
+  <name>Incus Agents</name>
+  <url>https://github.com/kienanstewart/${project.artifactId}</url>
   <licenses>
     <license>
-      <name>MIT License</name>
-      <url>https://opensource.org/license/mit/</url>
+      <name>AGPL-3.0 only</name>
+      <url>https://www.gnu.org/licenses/agpl-3.0.txt</url>
     </license>
   </licenses>
   <scm child.scm.connection.inherit.append.path="false" child.scm.developerConnection.inherit.append.path="false" child.scm.url.inherit.append.path="false">
@@ -34,7 +34,7 @@
     <changelist>-SNAPSHOT</changelist>
     <!-- https://www.jenkins.io/doc/developer/plugin-development/choosing-jenkins-baseline/ -->
     <jenkins.version>2.440.3</jenkins.version>
-    <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
+    <gitHubRepo>kienanstewart/${project.artifactId}</gitHubRepo>
 
     <spotless.check.skip>false</spotless.check.skip>
   </properties>
