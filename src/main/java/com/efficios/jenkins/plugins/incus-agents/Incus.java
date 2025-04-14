@@ -35,20 +35,40 @@ public class Incus extends Cloud {
         return false;
     }
 
+    public String getAuthType() {
+        return this.authType;
+    }
+
     public void setAuthType(String authType) {
         this.authType = authType;
+    }
+
+    public String getCertificate() {
+        return this.certificate;
     }
 
     public void setCertificate(String certificate) {
         this.certificate = certificate;
     }
 
+    public String getProject() {
+        return this.project;
+    }
+
     public void setProject(String project) {
         this.project = project;
     }
 
+    public String getProtocol() {
+        return this.protocol;
+    }
+
     public void setProtocol(String protocol) {
         this.protocol = protocol;
+    }
+
+    public String getUrl() {
+        return this.url;
     }
 
     public void setUrl(String url) {
@@ -70,5 +90,4 @@ public class Incus extends Cloud {
             return new ListBoxModel().add("incus").add("simplestreams");
         }
     }
-
 }

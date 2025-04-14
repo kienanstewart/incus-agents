@@ -28,10 +28,5 @@ public class BeforeJob extends NodeProperty<Node> {
     }
 
     @Extension
-    public static class DescriptorImpl extends NodePropertyDescriptor {
-        @Override
-        public String getDisplayName() {
-            return "TODO";
-        }
-    }
+    public static class DescriptorImpl extends NodePropertyDescriptor {}
 }

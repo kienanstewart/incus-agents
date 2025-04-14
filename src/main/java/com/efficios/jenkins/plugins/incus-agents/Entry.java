@@ -6,13 +6,17 @@
 package com.efficios.jenkins.plugins.incus_agent;
 
 import hudson.model.AbstractDescribableImpl;
+import hudson.model.Descriptor;
+import hudson.slaves.Cloud;
+import hudson.util.ListBoxModel;
+import jenkins.model.Jenkins;
 
 public abstract class Entry extends AbstractDescribableImpl<Entry> {
-    private String remote;
+    private String remoteName;
     private String instance;
 
-    public Entry(String remote, String instance) {
-        this.remote = remote;
+    public Entry(String remoteName, String instance) {
+        this.remoteName = remoteName;
         this.instance = instance;
     }
 
@@ -24,11 +28,36 @@ public abstract class Entry extends AbstractDescribableImpl<Entry> {
         this.instance = instance;
     }
 
-    public String getRemote() {
-        return this.remote;
+    public Cloud getRemote() {
+        Cloud cloud = Jenkins.get().getCloud(this.remoteName);
+        return cloud;
     }
 
-    public void setRemote(String remote) {
-        this.remote = remote;
+    public String getRemoteName() {
+        return this.remoteName;
+    }
+
+    public void setRemoteName(String remoteName) {
+        this.remoteName = remoteName;
+    }
+
+    protected static ListBoxModel remoteNameItems() {
+        ListBoxModel box = new ListBoxModel();
+        box.add("(None)", "");
+        Jenkins j = Jenkins.get();
+        if (j != null) {
+            for (Cloud cloud : j.clouds) {
+                if (cloud instanceof Incus) {
+                    box.add(cloud.getDisplayName(), cloud.name);
+                }
+            }
+        }
+        return box;
+    }
+
+    public static class DescriptorImpl extends Descriptor<Entry> {
+        public ListBoxModel doFillRemoteNameItems() {
+            return Entry.remoteNameItems();
+        }
     }
 }

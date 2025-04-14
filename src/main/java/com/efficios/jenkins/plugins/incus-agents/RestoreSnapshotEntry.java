@@ -6,7 +6,6 @@
 package com.efficios.jenkins.plugins.incus_agent;
 
 import hudson.Extension;
-import hudson.model.Descriptor;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public class RestoreSnapshotEntry extends Entry {
@@ -14,8 +13,8 @@ public class RestoreSnapshotEntry extends Entry {
     private String snapshotName;
 
     @DataBoundConstructor
-    public RestoreSnapshotEntry(String remote, String instance, String snapshotName) {
-        super(remote, instance);
+    public RestoreSnapshotEntry(String remoteName, String instance, String snapshotName) {
+        super(remoteName, instance);
         this.snapshotName = snapshotName;
     }
 
@@ -28,7 +27,7 @@ public class RestoreSnapshotEntry extends Entry {
     }
 
     @Extension
-    public static class DescriptorImpl extends Descriptor<Entry> {
+    public static class DescriptorImpl extends Entry.DescriptorImpl {
         @Override
         public String getDisplayName() {
             return "Restore Snapshot";

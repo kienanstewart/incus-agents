@@ -6,18 +6,17 @@
 package com.efficios.jenkins.plugins.incus_agent;
 
 import hudson.Extension;
-import hudson.model.Descriptor;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public final class RestartEntry extends Entry {
 
     @DataBoundConstructor
-    public RestartEntry(String remote, String instance) {
-        super(remote, instance);
+    public RestartEntry(String remoteName, String instance) {
+        super(remoteName, instance);
     }
 
     @Extension
-    public static class DescriptorImpl extends Descriptor<Entry> {
+    public static class DescriptorImpl extends Entry.DescriptorImpl {
         @Override
         public String getDisplayName() {
             return "Restart Instance";

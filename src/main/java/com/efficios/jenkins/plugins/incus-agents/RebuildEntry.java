@@ -6,27 +6,33 @@
 package com.efficios.jenkins.plugins.incus_agent;
 
 import hudson.Extension;
-import hudson.model.Descriptor;
+import hudson.slaves.Cloud;
+import hudson.util.ListBoxModel;
+import jenkins.model.Jenkins;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public class RebuildEntry extends Entry {
 
-    private String imageRemote;
+    private String imageRemoteName;
     private String imageName;
 
     @DataBoundConstructor
-    public RebuildEntry(String remote, String instance, String imageRemote, String imageName) {
-        super(remote, instance);
-        this.imageRemote = imageRemote;
+    public RebuildEntry(String remoteName, String instance, String imageRemoteName, String imageName) {
+        super(remoteName, instance);
+        this.imageRemoteName = imageRemoteName;
         this.imageName = imageName;
     }
 
-    public String getImageRemote() {
-        return this.imageRemote;
+    public Cloud getImageRemote() {
+        return Jenkins.get().getCloud(this.imageRemoteName);
     }
 
-    public void setImageRemote(String imageRemote) {
-        this.imageRemote = imageRemote;
+    public String getImageRemoteName() {
+        return this.imageRemoteName;
+    }
+
+    public void setImageRemoteName(String imageRemoteName) {
+        this.imageRemoteName = imageRemoteName;
     }
 
     public String getImageName() {
@@ -38,10 +44,14 @@ public class RebuildEntry extends Entry {
     }
 
     @Extension
-    public static class DescriptorImpl extends Descriptor<Entry> {
+    public static class DescriptorImpl extends Entry.DescriptorImpl {
         @Override
         public String getDisplayName() {
             return "Rebuild Instance";
+        }
+
+        public ListBoxModel doFillImageRemoteNameItems() {
+            return Entry.remoteNameItems();
         }
     }
 }

@@ -1,7 +1,16 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
-<f:entry title="Remote" field="remote">
-  <f:textbox />
+<f:entry title="Remote" field="remoteName">
+  <f:select>
+    <f:option value="">(None)</f:option>
+    <j:forEach var="cloud" items="${Jenkins.instance.clouds}">
+      <j:if test="${cloud.class.name == 'com.efficios.jenkins.plugins.incus_agent.Incus'}">
+        <f:option value="${cloud.name}" selected="${cloud.name == instance.cloudName}">
+          ${cloud.displayName}
+        </f:option>
+      </j:if>
+    </j:forEach>
+  </f:select>
 </f:entry>
 <f:entry title="Instance" field="instance">
   <f:textbox />
