@@ -39,7 +39,8 @@ public class RebuildEntry extends Entry {
 
     @Extension
     public static class DescriptorImpl extends Descriptor<Entry> {
-        @Override public String getDisplayName() {
+        @Override
+        public String getDisplayName() {
             return "Rebuild Instance";
         }
     }

@@ -18,7 +18,8 @@ public final class RestartEntry extends Entry {
 
     @Extension
     public static class DescriptorImpl extends Descriptor<Entry> {
-        @Override public String getDisplayName() {
+        @Override
+        public String getDisplayName() {
             return "Restart Instance";
         }
     }
