@@ -46,7 +46,7 @@ public class Incus extends Cloud {
     private String clientCertificateId;
     private String project;
     private String protocol;
-    private String url;
+    private String incusUrl;
 
     private List<String> apiVersions;
     private List<String> authMethods;
@@ -61,7 +61,7 @@ public class Incus extends Cloud {
             String clientCertificateId,
             String project,
             String protocol,
-            String url,
+            String incusUrl,
             List<String> apiVersions,
             List<String> authMethods) {
         super(name);
@@ -70,7 +70,7 @@ public class Incus extends Cloud {
         this.clientCertificateId = clientCertificateId;
         this.project = project;
         this.protocol = protocol;
-        this.url = url;
+        this.incusUrl = incusUrl;
         this.apiVersions = apiVersions;
         this.authMethods = authMethods;
     }
@@ -120,12 +120,12 @@ public class Incus extends Cloud {
         this.protocol = protocol;
     }
 
-    public String getUrl() {
-        return this.url;
+    public String getIncusUrl() {
+        return this.incusUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setIncusUrl(String url) {
+        this.incusUrl = url;
     }
 
     private CloseableHttpClient httpClient() {
@@ -249,12 +249,11 @@ public class Incus extends Cloud {
 
 
         public FormValidation doCheckAuthentication(
-                @QueryParameter("url") String url,
+                @QueryParameter("incusUrl") String incus_url,
                 @QueryParameter("publicCertificate") String publicCertificate,
                 @QueryParameter("clientCertificateId") String clientCertificateId,
                 @QueryParameter("authType") String authType,
                 @QueryParameter("project") String project,
-                @QueryParameter("ptocol") String protocol)
                 @QueryParameter("protocol") String protocol)
 
         {
@@ -263,7 +262,7 @@ public class Incus extends Cloud {
 
             JSONObject response;
             try{
-                response = (JSONObject) JSONSerializer.toJSON(Request.get(url).execute(client).returnContent().asString());
+                response = (JSONObject) JSONSerializer.toJSON(Request.get(incus_url).execute(client).returnContent().asString());
                 if (response.getInt("status_code") != 200) {
                     return FormValidation.error("Checking available API versions status code: " + response.getInt("status_code"));
                 }
@@ -274,7 +273,7 @@ public class Incus extends Cloud {
                 String apiVersion = (String) apiVersions.get(apiVersions.size() - 1);
                 LOGGER.info("Using API version: " + apiVersion);
 
-                response = (JSONObject) JSONSerializer.toJSON(Request.get(url + apiVersion).execute(client).returnContent().asString());
+                response = (JSONObject) JSONSerializer.toJSON(Request.get(incus_url + apiVersion).execute(client).returnContent().asString());
                 if (response.getInt("status_code") != 200) {
                     return FormValidation.error("Checking authentication with API status code: " + response.getInt("status_code"));
                 }
@@ -284,6 +283,8 @@ public class Incus extends Cloud {
                     LOGGER.warning(metadata.toString());
                     return FormValidation.warning("Authentication is not trusted, got " + metadata.getString("auth"));
                 }
+
+                // @TODO: Check access to project, if any.
                 return FormValidation.ok("Authenticated trusted with API version " + apiVersion);
            }
             catch (java.io.IOException e) {
@@ -298,7 +299,7 @@ public class Incus extends Cloud {
         }
 
         public FormValidation doCheckUrl(
-                @QueryParameter("url") String url,
+                @QueryParameter("incusUrl") String incus_url,
                 @QueryParameter("publicCertificate") String publicCertificate,
                 @QueryParameter("clientCertificateId") String clientCertificateId) {
             Jenkins.get().checkPermission(Jenkins.ADMINISTER);
@@ -308,7 +309,7 @@ public class Incus extends Cloud {
             try {
                 client = _httpClient(publicCertificate, clientCertificateId);
                 response = (JSONObject) JSONSerializer.toJSON(
-                        Request.get(url).execute(client).returnContent().asString());
+                        Request.get(incus_url).execute(client).returnContent().asString());
             } catch (java.io.IOException e) {
                 return FormValidation.error("IOException: " + e);
             } finally {

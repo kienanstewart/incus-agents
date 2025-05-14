@@ -3,7 +3,7 @@
 <f:entry title="Name" field="name">
   <f:textbox />
 </f:entry>
-<f:entry title="URL" field="url">
+<f:entry title="URL" field="incusUrl">
   <f:textbox />
 </f:entry>
 <f:entry title="Authentication Type" field="authType">
@@ -25,13 +25,13 @@
   <f:validateButton
       title="Test Connection"
       method="checkUrl"
-      with="url,publicCertificate,clientCertificateId"
+      with="incusUrl,publicCertificate,clientCertificateId"
       progress="Testing connection..."
   />
   <f:validateButton
       title="Test Authentication"
       method="checkAuthentication"
-      with="url,authType,publicCertificate,clientCertificateId,project,protocol"
+      with="incusUrl,authType,publicCertificate,clientCertificateId,project,protocol"
       progress="Testing authentication..."
   />
 </f:section>
