@@ -255,6 +255,7 @@ public class Incus extends Cloud {
                 @QueryParameter("authType") String authType,
                 @QueryParameter("project") String project,
                 @QueryParameter("ptocol") String protocol)
+                @QueryParameter("protocol") String protocol)
 
         {
             Jenkins.get().checkPermission(Jenkins.ADMINISTER);
