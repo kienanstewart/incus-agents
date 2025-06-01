@@ -34,7 +34,7 @@
     <changelist>-SNAPSHOT</changelist>
     <jenkins.baseline>2.479</jenkins.baseline>
     <jenkins.version>${jenkins.baseline}.3</jenkins.version>
-    <apache.httpclient5.version>5.4.4</apache.httpclient5.version>
+    <apache.httpclient5.version>5.5</apache.httpclient5.version>
     <gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
     <spotless.check.skip>false</spotless.check.skip>
   </properties>
